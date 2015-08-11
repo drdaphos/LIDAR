@@ -1,0 +1,40 @@
+; assumes you have opened a postscript plot and a log file (lgf)
+; you have already defined psfln, and possibly the display flag
+
+
+device, /close_file
+
+printf, lgf, file_basename(psfln)
+
+dotpos = strpos(psfln, '.ps', /reverse_search)
+giffln = strmid(psfln, 0, dotpos) + '.gif'
+
+if (!version.os_family EQ 'unix') then begin
+	set_plot, 'x'
+	if (keyword_set(makegif)) then begin
+		spawn, 'convert -background white -flatten -density 200 ' $
+			+ psfln + ' ' + giffln
+		printf, lgf, file_basename(giffln)
+	endif
+endif else begin
+	set_plot, 'win'
+endelse
+
+col27
+!p.multi = 0
+
+free_lun, lgf
+
+if (keyword_set(display)) then begin
+	if (!version.os_family EQ 'unix') then begin
+		pscmd = (keyword_set(portrait) ? psview_uxp : psview_ux)
+		cmd = pscmd  + ' ' + psfln
+		if (display LT 2) then cmd += ' &'
+		spawn, cmd
+	endif else begin
+		cmd = psview_win + ' ' + psfln
+		if (display LT 2) then nowait=1 else nowait=0
+		spawn, cmd, /noshell, nowait=nowait
+	endelse
+endif
+

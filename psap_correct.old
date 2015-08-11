@@ -1,0 +1,64 @@
+PRO psap_correct,psap,psap_adj,green_scatt,red_scatt,psap_adj_red,psap_adj_blue,quiet=quiet
+
+; Based on Bond et al Aerosol Sci. Tech. 30:582-600 (1999)
+; Modifed 18/08/10 by KFT to correct TN31 errors and include Ogren AST 44, 2010 correction
+; Note that Bond 99 correction includes an implicit adjustment from the operating wavelength 
+; of the PSAP to 550nm via K1, K2
+; PSAP data is output at STP while neph data is at ambient
+
+; INPUTS
+;     psap = uncorrected psap data, at STP
+;     green_scatt = AO98 uncorrected neph green scattering data (m^-1) AT STP
+;     red_scatt = uncorrected neph red scattering data (m^-1) AT STP
+; (red_scatt is no longer required but left in for backward compatability)
+
+; OUTPUTS
+;     psap_adj = corrected psap absorption at 550nm, at STP
+;     psap_adj_red = corrected psap absorption at 700nm, at STP
+;     psap_adj_blue = corrected psap absorption at 450nm, at STP
+
+; MODIFIED
+;	16/04/2012 KFT to check that scattering and absorption not both zero
+
+if (~keyword_set(quiet)) then print, 'Cflow used is 0.9091'
+
+; correct PSAP data for errors in flow rate, filter area and scattering effects 
+k1 = 0.02
+k2 = 1.22
+Cflow = 0.9091 ; measured by Jamie Trembath, Oct 2006(?)
+Cspot = 1.186  ; Atrue/Apsap
+Ogren = 0.873  ; Apsap/Aref is Ogren's correction
+
+if n_elements(green_scatt) ge 10 then begin
+    psap_adj=((Ogren * Cspot * Cflow * psap) - (k1*smooth(green_scatt, 10, /nan, /edge_truncate)))/k2
+endif else begin
+    psap_adj=((Ogren * Cspot * Cflow * psap) - (k1*green_scatt))/k2
+endelse
+
+; Flag negative values of absorption
+; changed 28/01/10 KT to flag the issue rather than change the absorption values to 0.0
+n=n_elements(psap_adj)
+
+psap_proc_flag=intarr(n)
+for i = 0L,n-1 do begin
+    ; check only valid when scattering and absorption not both zero	
+    if (abs(psap_adj[i])+green_scatt[i]) ne 0.0 then begin 
+      if ((psap_adj[i] lt 0.0) and (green_scatt[i]/(abs(psap_adj[i])+green_scatt[i]) gt 1.1)) $
+	then psap_proc_flag[i]=1       
+      if (total(psap_proc_flag) gt 30) then begin
+	if (~keyword_set(quiet)) then print, 'The PSAP dataset contains at least 30 secs of negative values that will result in SSA>1.1' 
+      endif
+    endif
+endfor
+
+; work out red and blue absorption by the 1/wavelength rule
+; this approximation is based on Mie calculations for biomass burning aerosol
+; but will not necessarily apply very well to other aerosol types
+
+if (~keyword_set(quiet)) then print, '!!Note that BB aerosol assumption made in estimating psap_adj_red and psap_adj_blue!!'
+
+wavelength_exponent = -1.
+psap_adj_red  = (0.70/0.55)^(wavelength_exponent) * psap_adj
+psap_adj_blue = (0.45/0.55)^(wavelength_exponent) * psap_adj
+
+end

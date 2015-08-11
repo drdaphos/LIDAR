@@ -1,0 +1,2 @@
+gfortran -o intpt.x intpt.f
+gfortran -o mietable.x mietable.for

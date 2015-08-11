@@ -1,0 +1,280 @@
+; lid_settings.include
+;
+; defines paths, defaults and common blocks for the lid_*.pro set of routines
+; this code is normally included at the beginning of a lid_*.pro routine
+; this IDL code will be evaluated at compile time (NOT runtime)
+;
+;
+
+
+; stricter compile options will enforce better code
+
+compile_opt strictarr, strictarrsubs
+
+
+; set floating point error reporting policy (0=none, 1=brief, 2=verbose)
+default_except = 2
+!except = default_except
+
+
+; store profiles as an assoc file in case that there is not enough memory
+
+default_use_assoc = 1
+
+
+; file paths
+
+defsysv, '!machine', exist=mach_ex
+if (mach_ex && !machine EQ 'metoff_desktop') then   $
+	base_path = '/data/local/fros/Faam_data/'   $
+else if (mach_ex && !machine EQ 'linux_usual') then $
+	base_path = '/home/marenco2/Faam_data/'     $
+else                                                $
+	base_path = '~/Faam_data/'
+
+base_path = '/data/local/fros/Faam_data/'
+aries_path   = base_path + 'aries/'
+aries_search = aries_path
+
+if (mach_ex && !machine EQ 'metoff_desktop') then $
+	aries_search = [aries_path, '/project/aries/netCDF/']
+
+info_path  = '/net/home/h02/frmo/Faam/lid_info/' 
+f77_path   = '/net/home/h02/frmo/Faam/f77/'
+raw_path   = base_path + 'lidar_bin/'
+core_path  = base_path + 'core/'
+horc_path0 = base_path + 'Horace_'
+orog_path  = base_path + 'orog/'
+out_path   = base_path + 'lidar_processed/
+cloud_path = base_path + 'cloud/'
+cloudcal_path = cloud_path + 'cal/mie/'
+tmpdir     = '/var/tmp/'
+
+
+; file names
+
+;orient_prefix='' $			; RHEL 4
+orient_prefix='orientation=' 		; RHEL 6
+
+fltable    = 'FlightTable'
+intpt_ux   = 'intpt.x'
+intpt_win  = 'intpt.exe'
+psview_ux  = 'gv -' + orient_prefix + 'seascape -media a4'
+psview_uxp = 'gv -' + orient_prefix + 'portrait -media a4 -scale -1'
+psview_win = '"C:\Program Files\gs\gsview\gsview32"'
+du_ux      = 'du -h'
+du_win     = 'dir'
+
+
+; common blocks
+
+common __lid, $
+; defined in lid_flight_select:
+	flno, flno_sub, flno_core, dd, mth, yy, takeoff, landing, $
+	instrument, platform, view, swap_chan, $
+	gnd_based, gnd_lat, gnd_lon, gnd_alt, gnd_offzenith, $
+	horc_path, lidar_path, shortfln, outfln, logfln, $
+	infofln, orogfln, assocfln, $
+; defined in lid_horace_read:
+	hor, corefln, $
+; defined in lid_headers_read:
+	nfiles, file, $
+; defined in lid_data_select:
+	tstart, tstop, target_it, smooth, file_idx, $
+	maxprofiles, maxaltitudes, $
+; defined in lid_data_read:
+	use_assoc, assc, nprofiles, profinfo, profile, globaltitle, $
+; defined in lid_data_grid:
+	nheights, lid_height, lid_uncorr, lid_signal, lid_pr2, lid_pr2tot, $
+	lid_reldep, lid_totdep, lid_aerdep, lid_extinc, lid_backsc, $
+	lid_bratio, lid_ash_ext, lid_oth_ext, lid_conc, lid_unc_ext, $
+; defined in lid_data_save:
+	lid_time, lid_distance, lid_altitude, lid_latitude, lid_longitude, $
+	lid_offnadir
+
+common __lid_settings, pre_trig_force
+
+; flag defaults
+
+if (n_elements(verbose)) NE 1 then verbose = 1
+if (n_elements(display)) NE 1 then display = 1
+
+
+; the following constants are used as flags throughout
+
+_a_charcode_ = 97B
+
+_undef_   = -1			; undefined flag
+_lundef_   = -1L		; undefined long
+_hundef_  = -9999.9		; undefined altitude
+_dundef_  = -9.99D37		; undefined double
+_dsmall_  = -9.99D37		; small double
+_dlarge_  = +9.99D37		; large double
+_dpos_    = +9.99D-37		; tiny double positive
+_llarge_  = 1000000000L		; large long integer
+
+_nadir_   = 0
+_zenith_  = 1
+
+_pretrig_ = 0
+_tail_    = 1
+
+_fern_    = 0
+_digi_    = 1
+_ash_     = 2
+
+
+; data type information
+
+_uncorr_  = 0
+_signal_  = 1
+_pr2_     = 2
+_pr2tot_  = 3
+_reldep_  = 4
+_totdep_  = 5
+_aerdep_  = 6
+_extinc_  = 7
+_backsc_  = 8
+_bratio_  = 9
+_ext_ash_ = 10
+_ext_oth_ = 11
+_conc_    = 12
+_unc_ext_ = 13
+_default_type_ = _pr2_
+issignal = [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+isdepol  = [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+isaer    = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
+typename = ['uncorr', 'signal', 'pr2', 'pr2tot', 'reldep', 'totdep', 'aerdep', $
+	'extinc', 'backsc', 'bratio', 'ext_ash', 'ext_other', 'conc', 'unc_ext']
+typeshort   = ['unc', 'sig', 'pr2', 'pr2tot', 'rdp', 'tdp', 'adp', 'ext', $
+	'bks', 'bkr', 'ash', 'oth', 'conc', 'dext']
+typetit = [ 'Lidar signal (background not subtracted)', $
+	'Lidar signal', $
+	'Range corrected lidar signal', $
+	'Range corrected lidar signal - recombined', $
+	'Relative depolarization ratio', $
+	'Volume depolarization ratio', $
+	'Aerosol depolarization ratio', $
+	'Aerosol extinction coefficient (m!u-1!n)', $
+	'Aerosol backscattering coefficient (m!u-1!n sr!u-1!n)', $
+	'Backscatter ratio', $
+	'Ash aerosol extinction coefficient (m!u-1!n)', $
+	'Other aerosol extinction coefficient (m!u-1!n)', $
+	'Concentration (!7l!3g/m!u3!n)', $
+	'Extinction uncertainty (m!u-1!n)' ]
+typeunits = [ 'Arbitrary units', 'Arbitrary units', 'Arbitrary units', $
+	'Arbitrary units', 'Arbitrary units', 'Dimensionless', 'Dimensionless',$
+	'Inverse metres', 'Inverse metres', 'Dimensionless', $
+	'Inverse metres', 'Inverse metres', 'Microgrammes per cubic meter', $
+	'Inverse metres']
+ntypes = n_elements(typename)
+
+
+; variables and defaults
+
+;mol_dr         = 0.0143D	; for a large receiver bandwidth
+mol_dr         = 0.00415D	; for a 0.36 nm receiver bandwidth
+default_caldr  = mol_dr
+min_aerdep_br  = 1.05D
+
+bs_ts1 = 0.0012D
+bs_ts2 = 0.0009D
+bs_tp1 = 0.81D	;0.51D
+bs_tp2 = 0.87D
+crosstalk_rp = ((1.0D - bs_tp1) * (1.0D - bs_tp2)) $
+	 / ((1.0D - bs_ts1) * (1.0D - bs_ts2))	; depolarized channel cross-talk
+crosstalk_ts = bs_ts1 / bs_tp1			; parallel channel cross-talk
+crosstalk_rs = 1.0D
+crosstalk_tp = 1.0D
+
+default_merge  = 1		; if set to zero, analog signal only is used
+default_view   = _nadir_
+default_it     = 60.0D
+default_smooth = 30
+default_f_ref  = 1.0D
+default_d_ref  = 1.0D
+default_f_alph = 0.0D
+default_d_alph = 0.0D
+default_lr     = 30.0D
+
+default_ash_lr = 80.0D
+default_ash_dr = 0.3D
+default_kext   = 0.6D
+default_fc     = 1.0D
+
+default_gnd_alt       = 30.0D
+default_gnd_lat       = 50.73D
+default_gnd_lon       = -3.48D
+default_gnd_offzenith = 0.0D
+
+default_speed   = 150.0D
+
+geoid_corr   = 0
+range_res    = 1.5D
+nchannels    = 2
+overlap      = 300.0D
+ovl          = long(round(overlap / range_res))
+pre_trig0    = 2048
+pre_trig1    = 6
+pre_trig     = pre_trig0 + pre_trig1
+if (n_elements(pre_trig_force) EQ 1) then pre_trig = pre_trig_force
+bgd_mode     = _tail_
+bgd_tail_pts = 1000
+pitch_offset = 4.2D
+merge_start  = [1500.0D, 1500.0D]
+merge_pct    = [[1D7, 2D7], [5D6, 1D7]]
+nlayers      = 4
+nclouds      = 3
+
+blindsmooth  = 300
+max_offnadir = 10.0D
+
+ymin =  -500.0D
+ymax = 15000.0D
+view_window = 30.0D
+view_min = 30
+
+max_offnadir    = 10.0D
+min_process_alt = 1000.0D
+cloud_threshold = 4000.0D
+cloud_distance  = 500.0D
+cloud_incr_fact = 3.0D
+cloud_incr_dist = 200.0D
+surf_min_hgt    = -500.0D
+surf_max_hgt    =  500.0D
+surf_oro_diff   =  500.0D
+rayl_itvl       = 250.0D
+rayl_sfc_margin = 100.0D
+rayl_search_ran = 10000.0D
+rayl_near_bad   = 1500.0D
+
+size_float  = 4
+size_double = 8
+
+bottomline = 'Lidar data analysis by Franco Marenco, Met Office, OBR'
+default_palette = 4
+default_landscape = 1
+
+
+; profinfo data structure
+
+profinfo_def = {profinfo, $
+	title:'', time:0L, start:0L, stop:0L, cnt:0L, nraw:0, it:0.0D, $
+	res:0.0D, vres:0.0D, smooth:0, hor_idx:[0L,0L], $
+	alt:0.0D, lat:0.0D, lon:0.0D, ofn:0.0D, con:0.0D, dis:0.0D, osf:0.0D, $
+	rsf:0.0D, lsf:0.0D, d_alt:0.0D, d_ofn:0.0D, $
+	m_alt:0.0D, m_ofn:0.0D, mx_ofn:0.0D,$
+	pa_ratio:dblarr(nchannels), pa_thresh:dblarr(nchannels), $
+	pa_idx:lonarr(nchannels), bgd:dblarr(nchannels), bst:dblarr(nchannels),$
+	p_idx:lonarr(2), p_cal:0.0D, p_norm:0.0D, $
+	f_idx:lonarr(2), f_br:0.0D, f_lidratio:default_lr, $
+	d_idx:lonarr(2), d_br:0.0D, d_lidratio:0.0D, d_aod:0.0D, d_iter:0, $
+	ct_idx:lonarr(nclouds), $
+	layer_idx:lonarr(2,nlayers), layer_aod:dblarr(nlayers), $
+	layer_totdep:dblarr(nlayers), layer_aerdep:dblarr(nlayers), $
+	layer_pk_hgt:dblarr(nlayers), layer_pk_fwhm:dblarr(nlayers), $
+	layer_pk_ext:dblarr(nlayers), layer_hgt:dblarr(nlayers), $
+	layer_dpth:dblarr(nlayers), tot_aod:0.0D, ash_aod:0.0D, $
+	oth_aod:0.0D, klid:dblarr(nchannels), aerok:0B, totdep:0B, $
+	aerdep:0B, aerosol:0B, unc_aerosol:0B, inv_type:0B, after_dep:0B, $
+	conc:0B}
