@@ -86,7 +86,7 @@ if (keyword_set(horace)) then begin
 
 	horacefile = string(format='(%"horace_%04d_%02d_%02d.dat")',yy,mth,dd)
 
-	if (~file_test(horc_path + horacefile, /read, /regular)) then begin
+	if (~file_test(horc_path0 + horacefile, /read, /regular)) then begin
 		msg += horacefile + ' '
 		message, msg + 'not found or not readable'
 	endif else if (coretried) then begin

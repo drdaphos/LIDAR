@@ -104,7 +104,18 @@ if (n_aer GT 0) then begin
 	altran = !y.crange
 	
 	lid_plot_track, /aod, xrange=aodran, trange=trange, /map, logfile=lgf
+
+        openw, lgf, logfln, /get_lun, /append
+        tot_aod = tau
+        sav_fln = string(format='(%"%s_it%03ds_aod.csv")', outfln, target_it)
+        ;save, description=globaltitle, filename=sav_fln, tot_aod, tim
+        WRITE_CSV, sav_fln, tot_aod
+        print, 'Aerosol Optical Depths saved in ' + file_basename(sav_fln)     
+        free_lun, lgf
+
 endif
+
+
 
 if (n_ash GT 0) then begin
 	tau     = profinfo.tot_aod

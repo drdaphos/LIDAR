@@ -54,7 +54,7 @@ global_info_value = [globaltitle, $
 	platform + ' lidar data. Altitudes referred to the the ' $
 		+ geoid + ' geoid.', $
 	'Met Office, Observations Based Research, Exeter (UK)', $
-	'For research use only. Please contact Franco Marenco ' $
+	'For research use only. Please contact Debbie OSullivan ' $
 		+ 'before using this dataset.', $
 	'http://www.faam.ac.uk/index.php/science-instruments/' $
 		+ 'remote-sensing/281-mini-lidar']

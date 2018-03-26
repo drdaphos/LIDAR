@@ -1,5 +1,5 @@
 pro lid_layers_slopeset, profnum, lgf, verbose=verbose, $
-	fernald=fernald, digirolamo=digirolamo
+	fernald=fernald, digirolamo=digirolamo, keepzero=keepzero
 
 @lid_settings.include
 
@@ -29,6 +29,8 @@ if (n_elements(fernald) EQ 0)    then fernald=1
 if (n_elements(digirolamo) EQ 0) then digirolamo=0
 if ((~fernald) && (~digirolamo)) then message, 'Nothing to set.'
 
+forcezero = ~keyword_set(keepzero)
+
 aerflag = ''
 if (fernald)    then aerflag += 'F'
 if (digirolamo) then aerflag += 'D'
@@ -53,14 +55,16 @@ for p = first, last do begin
 	slope_method, prof.range, prof.pr2[*,0], taumol, prof.mol_beta, $
 		alpha=alphaslope, sample=50
 
-	if (fernald && f_def) then begin
+	if (fernald && f_def && (forcezero || abs(pinfo.f_br-1.0D) GE 1D-6)) $
+	   then begin
 		f_mol      = prof.mol_beta[mean([pinfo.f_idx])]
 		f_alpha    = mean(alphaslope[pinfo.f_idx[0]:pinfo.f_idx[1]])
 		pinfo.f_br = 1.0D + f_alpha / (pinfo.f_lidratio * f_mol)
 		++n_fern
 	endif
 
-	if (digirolamo && d_def) then begin
+	if (digirolamo && d_def && (forcezero || abs(pinfo.d_br-1.0D) GE 1D-6))$
+	   then begin
 		d_mol      = prof.mol_beta[mean([pinfo.d_idx])]
 		d_alpha    = mean(alphaslope[pinfo.d_idx[0]:pinfo.d_idx[1]])
 		pinfo.d_br = 1.0D + d_alpha / (pinfo.f_lidratio * d_mol)

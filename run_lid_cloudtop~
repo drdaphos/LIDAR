@@ -1,0 +1,43 @@
+pro run_lid_cloud_top
+
+; use high resolution data (assume acquisition resolution was 2s)
+; can be very long to run
+lid_init, it=2, /guess, 'B577'
+
+; the following will bring up a plot
+lid_cloudtop
+
+;
+; check data qualitatively on plot before proceeding
+; do any necessary adjustments for quality control
+;
+
+; the following will save the data in cloud_top_height
+; the option index=0 chooses the first cloud top only
+; adapt to your needs
+lid_cloudtop, cloud_top_height=cloud_top_height, index=0, display=0
+
+; the following will save NaN for undefined cloud levels
+idx = where(cloud_top_height LT -1D10, cnt)
+if (cnt GT 0) then cloud_top_height[idx]=!values.f_nan
+
+; the following will save the data
+common __lid
+cloud_time = lid_time
+save, filename = outfln + '_cloudtop.sav', cloud_time, cloud_top_height
+
+; some plotting
+plot, cloud_time, cloud_top_height, psym=4 
+oplot, cloud_time, cloud_top_height[*,0], psym=4, color=2
+oplot, cloud_time, cloud_top_height[*,1], psym=4, color=3
+oplot, cloud_time, cloud_top_height[*,2], psym=4, color=4
+
+
+lid_init, it=2, /guess, 'B577'
+lid_cloudtop, cloud_top_height=cloud_top_height, display=0
+idx = where(cloud_top_height LT -1D10, cnt)
+if (cnt GT 0) then cloud_top_height[idx]=!values.f_nan
+common __lid
+cloud_time = lid_time
+save, filename = outfln + '_cloudtop.sav', cloud_time, cloud_top_height
+

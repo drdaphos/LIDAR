@@ -1,0 +1,35 @@
+pro iced
+
+; source Rayleigh scattering portion of flights
+
+
+dir = '~/lidar/Rayleigh/iced/'
+
+flno0  = [ 'B923',  'B923',  'B923',  'B924',  'B924' ]
+flno1  = [ 'B923a', 'B923b', 'B923c', 'B924a', 'B924b']
+start0 = [  09.33,   09.43,   09.55,   15.12,   17.05 ]
+stop0  = [  09.41,   09.54,   09.69,   15.18,   17.11 ]
+
+flno0  = [  flno0,  'B926',  'B926',  'B926' , 'B926', 'B930' ]
+flno1  = [  flno1,  'B926a', 'B926b', 'B926c', 'B926d','B930a']
+start0 = [ start0,   14.78,   14.93,   15.16,   17.36,  16.81 ]
+stop0  = [  stop0,   14.92,   15.07,   15.23,   17.42,  16.95 ]
+
+flno0  = [  flno0,  'B931',  'B931',  'B931',  'B934' ]
+flno1  = [  flno1,  'B931a', 'B931b', 'B931c', 'B934a']
+start0 = [ start0,   12.26,   12.44,   15.52,   14.27 ]
+stop0  = [  stop0,   12.33,   12.45,   15.63,   14.33 ]
+
+
+@lid_settings.include
+
+append = '_pr2_rdp'
+for i=0, n_elements(flno0)-1 do begin
+	lid_init, flno0[i], start=start0[i], stop=stop0[i], $
+		overlap=0.0, /no_overlap_correct
+	sav_fln = string(format='(%"%s_it%03ds_res%03dm%s.sav")', outfln, $
+		target_it, round(range_res * smooth), append)
+	file_move, sav_fln, dir + flno1[i] + '.sav'
+endfor
+
+end

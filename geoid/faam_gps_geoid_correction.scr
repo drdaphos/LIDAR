@@ -1,0 +1,62 @@
+#Apply a geoid correction to the GPS altitude data from the FAAM BAe-146
+#S. J. Abel
+#30th April 2012
+
+#Input file name
+fname=/data/local/fros/Faam_data/core/core_faam_20150807_v004_r1_b920_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150810_v004_r0_b921_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150811_v004_r0_b922_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150812_v004_r1_b923_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150812_v004_r1_b924_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150813_v004_r1_b925_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150814_v004_r0_b926_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150815_v004_r0_b927_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150816_v004_r0_b928_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150817_v004_r2_b929_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150818_v004_r1_b930_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150819_v004_r1_b931_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150820_v004_r1_b932_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150821_v004_r1_b933_1hz.nc
+fname=/data/local/fros/Faam_data/core/core_faam_20150825_v004_r1_b934_1hz.nc
+
+#Output file name
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150807_v004_r1_b920_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150810_v004_r0_b921_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150811_v004_r0_b922_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150812_v004_r1_b923_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150812_v004_r1_b924_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150813_v004_r1_b925_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150814_v004_r0_b926_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150815_v004_r0_b927_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150816_v004_r0_b928_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150817_v004_r2_b929_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150818_v004_r1_b930_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150819_v004_r1_b931_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150820_v004_r1_b932_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150821_v004_r1_b933_1hz.nc
+fname_out=/data/local/fros/Faam_data/core_geoid/core_faam_20150825_v004_r1_b934_1hz.nc
+
+echo $fname
+
+#Create input data to intpt.f
+tidl <<DELIMIT
+ fname_idl = '$fname'
+ create_geoid_input,fname_idl
+DELIMIT
+
+#Calculate correction factors
+intpt.x
+
+#Create file containing corrected data
+tidl <<DELIMIT
+ fname_idl = '$fname_out'
+ create_geoid_output,fname_idl
+DELIMIT
+
+#Remove temporary files
+rm -f tmp/intpt_input.txt
+rm -f tmp/intpt_output.txt
+rm -f tmp/tmp_data.sav
+
+
+

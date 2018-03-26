@@ -1,0 +1,55 @@
+# -*- coding: iso-8859-1 -*-
+# useful standard modules:
+import glob
+from datetime import datetime
+
+# for pp data, this is most easily loaded into iris
+import iris
+
+# sets up trui:
+import trui
+
+
+# print the help for retr_from_opfc
+#help(trui.archive.retr_from_opfc.retr_from_opfc)
+
+
+# define the retreival:
+
+# Set the start and end dates to actually get the data.
+# In this example, 2 years of data are retrieved at once. Large retrievals will be broken down 
+# into a number of smaller retrievals automatically within retr_from_opfc
+DATE_START = datetime(2015, 06, 11, 00, 00, 00)
+DATE_END = datetime(2015, 12, 13, 00, 00, 00) # end date is inclusive...
+
+# get data from which model?
+SOURCE_MODEL = 'glu'
+
+# and which cycles:
+SOURCE_MODEL_CYCLE_TIMES = [0, 6, 12, 18]
+
+# define what is going to be retrieved. This includes the stash codes, levels and forecast times (which can be different for each item in the list):
+RETR_LIST = []
+RETR_LIST.append({'stash' : iris.fileformats.pp.STASH(1, 17, 232),
+                  'level type': 'pressure',
+                  'levels' : [None],
+                  'forecast times': [0, 3]} )
+
+RETR_LIST.append({'stash' : iris.fileformats.pp.STASH(1, 17, 257),
+                  'level type': 'pressure',
+                  'levels' : [None],
+                  'forecast times': [0, 3] } )
+
+
+
+# target directory to retreive data to:
+retr_dir = '/data/local/fros/iced'
+
+# now retrieve the data:
+trui.archive.retr_from_opfc.retr_from_opfc(model=SOURCE_MODEL, cycles=SOURCE_MODEL_CYCLE_TIMES, \
+                                           date_range = [DATE_START, DATE_END], \
+                                           retr_list=RETR_LIST, out_dir=retr_dir )
+
+# load the data:
+filelist = glob.glob('%s/*.pp' % retr_dir)
+cubelist = iris.load_cubes(filelist)

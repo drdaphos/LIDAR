@@ -1,5 +1,6 @@
-pro lid_process, digirolamo=digirolamo, ash=ash, aod_cutoff=aod_cutoff, $
-	yexisting=yexisting, verbose=verbose, display=display, $
+pro lid_process, digirolamo=digirolamo, ash=ash, iced=iced, $
+	aod_cutoff=aod_cutoff, yexisting=yexisting, $
+	verbose=verbose, display=display, info=info, $
 	d_lr=d_lr, d_ref_rel=d_ref_rel, d_ref_abs=d_ref_abs
 
 
@@ -9,10 +10,16 @@ pro lid_process, digirolamo=digirolamo, ash=ash, aod_cutoff=aod_cutoff, $
 showinfo = 0
 showcont = 0
 
-if (n_elements(yexisting)) NE 1 then yexisting = 1
-if (n_elements(display)) NE 1 then display = 1
+if (n_elements(yexisting) NE  1) then yexisting = 1
+if (n_elements(display)   NE  1) then display = 1
+if (n_elements(info)      NE  1) then info = 1
 if (n_elements(aod_cutoff) EQ 1) then showinfo = display $
 	else showcont = display
+
+; the following will set default error estimates - set to 0 to disable
+if (n_elements(d_lr) NE 1)       then d_lr = 10
+if (n_elements(d_ref_rel) NE 1)  then d_ref_rel = 0.5
+if (n_elements(d_ref_abs) NE 1)  then d_ref_abs = 10E-6
 
 if (keyword_set(ash)) then begin
 	ash_dr   = 0.34D
@@ -25,9 +32,14 @@ endif
 
 lid_layers_auto, verbose=verbose
 exclude_data
-lid_data_process, digirolamo=digirolamo,  ash_process=ash, $
-	ash_dr=ash_dr, ash_lr=ash_lr, other_lr=other_lr, $
-	d_lr=d_lr, d_ref_rel=d_ref_rel, d_ref_abs=d_ref_abs, verbose=verbose
+if (keyword_set(iced)) then begin
+	iced_data_process
+endif else begin
+	lid_data_process, digirolamo=digirolamo,  ash_process=ash, $
+		ash_dr=ash_dr, ash_lr=ash_lr, other_lr=other_lr, $
+		d_lr=d_lr, d_ref_rel=d_ref_rel, d_ref_abs=d_ref_abs, $
+		verbose=verbose
+endelse
 if (keyword_set(digirolamo)) then lid_ratio_save, verbose=verbose
 lid_data_grid, type='pr2tot',  yexisting=yexisting, verbose=verbose
 lid_data_grid, type='extinc',  /yexisting, verbose=verbose
@@ -38,7 +50,7 @@ if (keyword_set(ash)) then begin
 	lid_data_grid, type='ext_ash', /yexisting, verbose=verbose
 	lid_data_grid, type='ext_other', /yexisting, verbose=verbose
 endif
-lid_data_save, type=['extinc'], verbose=verbose
+lid_data_save, type=['extinc','unc_ext'], verbose=verbose
 
 lid_plot_profiles, type='pr2',    yrange=hgt_range, display=0
 lid_plot_profiles, type='extinc', yrange=hgt_range, xrange=ext_range, $
@@ -56,7 +68,8 @@ if (n_aer GT 1) then begin
 		lid_plot_contour, type=['ext_ash', 'ext_other'], $
 			yrange=hgt_range, xrange=[ext_range, ext_range], $
 			display=display
-	lid_plot_info, aod_cutoff=aod_cutoff, display=showinfo
+	if (info) then $
+		lid_plot_info, aod_cutoff=aod_cutoff, display=showinfo
 endif
 
 

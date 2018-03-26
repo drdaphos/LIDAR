@@ -1,0 +1,61 @@
+pro lid_overlap_correct
+
+
+@lid_settings.include
+
+
+openw, lgf, logfln, /get_lun, /append
+printf, lgf, '--> LID_OVERLAP_CORRECT'
+
+
+if (instrument EQ '146' && yy EQ 2012 && mth GE 3 && mth LE 5) then begin
+	fln = 'overlap_mevali.dat'
+endif else if (instrument EQ '146' && yy EQ 2012 && mth EQ 6) then begin
+	fln = 'overlap_fennec2012.dat'
+endif else if (instrument EQ '146' && yy EQ 2012 $
+   && (mth GE 9 && mth LE 10)) then begin
+	fln = 'overlap_sambba.dat'
+endif else if (instrument EQ '146' && yy EQ 2013 && (mth EQ 2 $
+   || (mth EQ 3 && dd LT 10))) then begin
+	fln = 'overlap_feb2013.dat'
+endif else if (instrument EQ '146' && yy EQ 2015 && mth EQ 8) then begin
+	fln = 'overlap_iced.dat'
+endif else begin
+	info_str = 'No overlap correction applied.'
+	printf, lgf, info_str
+	free_lun, lgf
+	message, info_str, /continue
+	return
+endelse
+
+
+info_str = 'Applying overlap correction: ' + fln
+printf, lgf, info_str
+message, info_str, /continue
+
+
+data = read_ascii(info_path + fln)
+
+range        = reform(data.field1[0,*])
+ovl_function = reform(data.field1[1,*])
+n_correct = n_elements(ovl_function)
+
+ovl_function2 = [ovl_function, replicate(1.0D, maxaltitudes-n_correct)]
+i_one = ovl/2
+i_two = 3*ovl/4
+w = dblarr(i_two+1)
+w[i_one:i_two] = dindgen(i_two-i_one+1) / (i_two-i_one)
+ovl_function2[0:i_two] = w*ovl_function[0:i_two] + (1-w)
+
+for p=0, nprofiles-1 do begin
+	prof = profile[p]
+	prof.pr2[*,0] /= ovl_function2
+	prof.pr2[*,1] /= ovl_function2
+	profile[p] = prof
+endfor
+
+
+free_lun, lgf
+
+
+end

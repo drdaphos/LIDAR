@@ -1,0 +1,35 @@
+pro sambba
+
+; source Rayleigh scattering portion of flights
+
+dir = '~/lidar/Rayleigh/sambba2/'
+
+flno0  = [ 'B731',  'B731',  'B732',  'B736',  'B736',  'B741',  'B741']
+flno1  = ['B731a', 'B731b', 'B732a', 'B736a', 'B736b', 'B741a', 'B741b']
+start0 = [  14.51,   15.00,   16.99,   19.51,   19.57,   13.35,   15.10]
+stop0  = [  14.56,   15.07,   17.05,   19.55,   19.66,   13.43,   15.15]
+
+flno0  = [  flno0,  'B743',  'B743',  'B744',  'B745']
+flno1  = [  flno1, 'B743a', 'B743b', 'B744a', 'B745a']
+start0 = [ start0,   18.88,   20.45,   13.35,   18.56]
+stop0  = [  stop0,   19.40,   20.55,   13.52,   18.67]
+
+flno0  = [  flno0,  'B747',  'B747',  'B748',  'B748']
+flno1  = [  flno1, 'B747a', 'B747c', 'B748a', 'B748b']
+start0 = [ start0,   15.44,   16.02,   12.71,   13.26]
+stop0  = [  stop0,   15.48,   16.17,   13.07,   13.51]
+
+
+@lid_settings.include
+
+
+append = '_pr2_rdp'
+for i=0, n_elements(flno0)-1 do begin
+	lid_init, flno0[i], start=start0[i], stop=stop0[i], $
+		overlap=0.0, /no_overlap_correct
+	sav_fln = string(format='(%"%s_it%03ds_res%03dm%s.sav")', outfln, $
+		target_it, round(range_res * smooth), append)
+	file_move, sav_fln, dir + flno1[i] + '.sav'
+endfor
+
+end

@@ -1,0 +1,35 @@
+#Apply a geoid correction to the GPS altitude data from the AIMMS probe
+#S. J. Abel
+#30th April 2012
+
+#Input file name
+fname_core=/project/obr/PIKNMIXE/mfd/B901/b901_mfd_20150323_1hz_r1.nc
+fname_aimms=/project/obr/PIKNMIXE/aimms/B901/aimms_20150323_v003_r0_b901_1hz_subset.nc
+#Output file name
+fname_out=/project/obr/PIKNMIXE/geoid_alt/B901/gps_alt_20150323_b901_1hz_aimms_corr.nc
+
+echo $fname
+
+#Create input data to intpt.f
+tidl <<DELIMIT
+ fname_idl = '$fname_aimms'
+ fname_idl2 = '$fname_core'
+ create_geoid_input_aimms,fname_idl,fname_idl2
+DELIMIT
+
+#Calculate correction factors
+intpt.x
+
+#Create file containing corrected data
+tidl <<DELIMIT
+ fname_idl = '$fname_out'
+ create_geoid_output_aimms,fname_idl
+DELIMIT
+
+#Remove temporary files
+#rm -f tmp/intpt_input.txt
+#rm -f tmp/intpt_output.txt
+#rm -f tmp/tmp_data.sav
+
+
+

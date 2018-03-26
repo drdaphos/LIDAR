@@ -1,0 +1,259 @@
+pro lid_data_save, type=type, text=text, netcdf=netcdf, $
+	revision=revision, double=double, verbose=verbose
+
+
+@lid_settings.include
+
+openw, lgf, logfln, /get_lun, /append
+printf, lgf, '--> LID_DATA_SAVE'
+
+if (n_elements(type) LE 0) then type = [_pr2_, _reldep_]
+ntypes = n_elements(type)
+
+if (n_elements(nheights) NE 1 || nheights LE 0L $
+   || n_elements(lid_height) NE nheights) then $
+	message, 'Lidar height array inexistent or inconsistent.'
+
+append = ''
+has_signal = 0
+for i=0, ntypes-1 do begin
+	type2 = lid_type_select(type[i])
+	append += '_' + typeshort[type2]
+	if (issignal[type2]) then has_signal = 1
+endfor
+
+basefln = string(format='(%"%s_it%03ds_res%03dm%s")', outfln, target_it, $
+	round(range_res * smooth), append)
+if (n_elements(revision) EQ 1) then begin
+	basefln += string(format='(%"_rev%s")', strtrim(revision, 2))
+endif else begin
+	revision = 0
+endelse
+sav_fln = basefln + '.sav'
+txt_fln = basefln + '.txt'
+nc_fln  = basefln + '.nc'
+info_structure = 'lidar_info'
+nc_prefix      = 'lidar_nc_'
+nc_infoprefix  = info_structure
+txt_err = 0
+
+if (keyword_set(netcdf) && netcdf GE 2) then begin
+	append_spl = strsplit(append, '_', /extract, count=n_app)
+	append2 = ''
+	for i=0, n_app-1 do append2 += '-' + append_spl[i]
+	nc_fln = string(out_path, shortfln, strlowcase(platform), $
+		yy, mth, dd, revision, strlowcase(flno), target_it, $
+		round(range_res * smooth), append2, $
+		format = '(%"%s/%s/metoffice-lidar_%s_%04d%02d%02d_' $
+		+ 'r%d_%s_it%03ds-res%03dm%s.nc")')
+endif
+
+geoid = (keyword_set(geoid_corr) ? 'EGM96' : 'WGS84')
+global_info_name  = ['title', 'source', 'institution', 'comment', 'references']
+global_info_value = [globaltitle, $
+	platform + ' lidar data. Altitudes referred to the the ' $
+		+ geoid + ' geoid.', $
+	'Met Office, Observations Based Research, Exeter (UK)', $
+	'For research use only. Please contact Franco Marenc
+ ' $
+		+ 'before using this dataset.', $
+	'http://www.faam.ac.uk/index.php/science-instruments/' $
+		+ 'remote-sensing/281-mini-lidar']
+nglobal = n_elements(global_info_name)
+exec_string = string(info_structure, format = '(%"%s = {")')
+for i=0, nglobal-1 do $
+	exec_string += string(global_info_name[i], global_info_value[i], $
+		(i LT nglobal-1 ? ', ' : '}'), format='(%"%s:''%s''%s")')
+result = execute(exec_string)
+
+if (keyword_set(text)) then begin
+	openw, txt, txt_fln, /get_lun
+	printf, txt, global_info_value, format='(A)'
+endif
+
+if (keyword_set(double)) then convertf = 'double' $
+	else convertf = 'float'
+
+lid_time      = call_function(convertf, profinfo.time)
+lid_distance  = call_function(convertf, profinfo.dis)
+lid_altitude  = call_function(convertf, profinfo.alt)
+lid_latitude  = call_function(convertf, profinfo.lat)
+lid_longitude = call_function(convertf, profinfo.lon)
+lid_offnadir  = call_function(convertf, profinfo.ofn)
+
+basic_arrays = ['lid_time', 'lid_distance', 'lid_altitude', $
+	'lid_latitude', 'lid_longitude', 'lid_height', 'lid_offnadir']
+basic_names  = ['Time (s)', 'Along-track distance (m)', $
+	'Aircraft altitude (m)', 'Latitude (degrees, +N)', $
+	'Longitude (degrees, +E)', 'Height (m)', 'Off-nadir angle (degrees)'] 
+basic_standardnames = ['time', '', 'altitude', $
+	'latitude', 'longitude', 'height', '']
+basic_units = [string(format='(%"seconds since %04d-%02d-%02d 00:00:00 +0")', $
+	yy, mth, dd), 'm', 'm', 'degree_north', 'degree_east', 'm', 'degree']
+nbasic = n_elements(basic_arrays)
+arraylist = strarr(nbasic + ntypes)
+
+exec_string = string(format='(%"save, description=''%s'', ' $
+	+ 'filename=''%s''%s, %s")', globaltitle, sav_fln, $
+	((keyword_set(verbose) && verbose GE 2) ? ', /verbose' : ''), $
+	info_structure)
+
+k = 0
+for i=0, nbasic-1 do begin
+	exec_string += ', ' + basic_arrays[i]
+	arraylist[k++] = basic_arrays[i]
+	if (keyword_set(text)) then begin
+		txt_err += ~execute('help, output=header, ' + basic_arrays[i])
+		printf, txt, ''
+		printf, txt, header
+		printf, txt, 'BEGIN'
+		txt_err += ~execute('printf, txt, ' + basic_arrays[i])
+		printf, txt, 'END'
+	endif
+endfor
+
+for i=0, ntypes-1 do begin
+	type2 = lid_type_select(type[i])
+
+	case type2 of
+		_uncorr_  : arrayname = 'lid_uncorr'
+		_signal_  : arrayname = 'lid_signal'
+		_pr2_     : arrayname = 'lid_pr2'
+		_reldep_  : arrayname = 'lid_reldep'
+		_totdep_  : arrayname = 'lid_totdep'
+		_aerdep_  : arrayname = 'lid_aerdep'
+		_extinc_  : arrayname = 'lid_extinc'
+		_backsc_  : arrayname = 'lid_backsc'
+		_bratio_  : arrayname = 'lid_bratio'
+		_ext_ash_ : arrayname = 'lid_ash_ext'
+		_ext_oth_ : arrayname = 'lid_oth_ext'
+		_conc_    : arrayname = 'lid_conc'
+		_unc_ext_ : arrayname = 'lid_unc_ext'
+                _cl_time_ : arrayname = 'cloud_time'
+                _cloud1_  : arrayname = 'cloud_1'
+                _cloud2_  : arrayname = 'cloud_2'
+                _cloud3_  : arrayname = 'cloud_3'
+	endcase
+
+	exec_string += ', ' + arrayname
+	arraylist[k++] = arrayname
+	if (keyword_set(text)) then begin
+		txt_err += ~execute('help, output=header, ' + arrayname)
+		printf, txt, ''
+		printf, txt, header
+		printf, txt, 'BEGIN'
+		txt_err += ~execute('printf, txt, ' + arrayname)
+		printf, txt, 'END'
+	endif
+endfor
+
+result = execute(exec_string)
+if (~result) then begin
+	info_str = 'Failed: ' + exec_string
+	message, info_str
+endif
+
+info_str = 'Data arrays saved in ' + file_basename(sav_fln)
+printf, lgf, info_str
+printf, lgf, arraylist, format = '(%"  %s")'
+if (keyword_set(verbose)) then begin
+	print, info_str
+	print, arraylist, format = '(%"  %s")'
+endif
+
+if (!version.os_family EQ 'unix') then begin
+	du_cmd = du_ux
+endif else begin
+	du_cmd = du_win
+endelse
+spawn, du_cmd + ' ' + sav_fln, info_str
+printf, lgf, '> ', info_str
+if (keyword_set(verbose)) then print, '> ', info_str
+
+if (keyword_set(text)) then begin
+	printf, txt, ''
+	printf, txt, 'END-OF-FILE'
+	free_lun, txt
+	if (txt_err NE 0) then message, string(txt_err, txt_fln, $
+		format='(%"%d errors in writing to %s")')
+	info_str = 'Text file generated: ' + file_basename(txt_fln)
+	printf, lgf, info_str
+	if (keyword_set(verbose)) then print, info_str
+	spawn, du_cmd + ' ' + txt_fln, info_str
+	printf, lgf, '> ', info_str
+	if (keyword_set(verbose)) then print, '> ', info_str
+endif
+
+if (keyword_set(netcdf)) then begin
+	arraylist2 = nc_prefix + strmid(arraylist, 4)
+
+	for i=0, nbasic + ntypes - 1 do begin
+		if (arraylist[i] EQ 'lid_time' $
+		   || arraylist[i] EQ 'lid_height') then begin
+			nc_exec_var = 'dim_'
+			nc_exec_att = 'datt_'
+		endif else begin
+			nc_exec_var = 'var_'
+			nc_exec_att = 'vatt_'
+		endelse
+		nc_exec_fv = nc_exec_att + arraylist2[i] $
+			+ '__FillValue = ' + string(_dundef_)
+		nc_exec_var += arraylist2[i] + ' = ' + arraylist[i]
+		nc_exec_ln  = nc_exec_att + arraylist2[i] + '_long_name = '
+		nc_exec_un  = nc_exec_att + arraylist2[i] + '_units = '
+		nc_exec_sn  = nc_exec_att + arraylist2[i] + '_standard_name = '
+		if (i LT nbasic) then begin
+			nc_exec_ln += 'basic_names[i]'
+			nc_exec_un += 'basic_units[i]'
+			nc_exec_sn += 'basic_standardnames[i]'
+		endif else begin
+			type2 = lid_type_select(type[i-nbasic])
+			nc_exec_ln += 'typetit[type2]'
+			nc_exec_un += 'typeunits[type2]'
+		endelse
+		nc_res_var = execute(nc_exec_var)
+		nc_res_ln  = execute(nc_exec_ln)
+		nc_res_un  = execute(nc_exec_un)
+		nc_res_fv  = execute(nc_exec_fv)
+		if (i LT nbasic && basic_standardnames[i] NE '') then begin
+			nc_res_sn = execute(nc_exec_sn)
+		endif else begin
+			nc_res_sn = 1
+		endelse
+		if (~nc_res_var || ~nc_res_ln || ~nc_res_un $
+		   || ~nc_res_fv || ~nc_res_sn) then begin
+			info_str = 'Failed: ' + nc_exec_var $
+				+ ' / ' + nc_exec_ln + ' / ' + nc_exec_un $
+				+ ' / ' + nc_exec_fv + ' / ' + nc_exec_sn
+			message, info_str
+		endif
+	endfor
+	if (has_signal) then begin
+		nc_res_var = execute('dim_' + nc_prefix $
+			+ 'channel = call_function(convertf,indgen(2))')
+		nc_res_ln = execute('datt_' + nc_prefix $
+			+ 'channel_long_name = ''Channel''')
+	endif
+	gatt_Conventions = 'CF-1.0'
+	for i=0, nglobal-1 do begin
+		nc_infopref2 = string(nc_infoprefix, i, format = '(%"%s_%d_")')
+		nc_exec_gatt = string(nc_infopref2, global_info_name[i], $
+			format = '(%"gatt_%s%s = global_info_value[i]")')
+		nc_res_gatt = execute(nc_exec_gatt)
+		nc_exec_gatt = string(global_info_name[i], $
+			format = '(%"gatt_%s = global_info_value[i]")')
+		nc_res_gatt = execute(nc_exec_gatt)
+	endfor
+	write_netcdf_idl, nc_fln
+
+	info_str = 'NetCDF file generated: ' + file_basename(nc_fln)
+	printf, lgf, info_str
+	if (keyword_set(verbose)) then print, info_str
+	spawn, du_cmd + ' ' + nc_fln, info_str
+	printf, lgf, '> ', info_str
+	if (keyword_set(verbose)) then print, '> ', info_str
+endif
+
+free_lun, lgf
+
+end

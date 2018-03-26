@@ -65,7 +65,9 @@ endif
 
 def_xmin =  [_dundef_, _dundef_, 0.0D,    0.0D,    0.0D, 0.0D, 0.0D, $
 	0.0D, 0.0D, 1.0D,     0.0D, 0.0D, 0.0D, 0.0D]
-def_xmax =  [_dundef_, _dundef_, 2500.0D, 2500.0D, 2.5D, 0.1D, 0.2D, $
+;def_xmax =  [_dundef_, _dundef_, 2500.0D, 2500.0D, 2.5D, 0.1D, 0.2D, $
+;	1D-3, 1D-5, _dundef_, 1D-3, 1D-3, 1000.0D, 1D-3]
+def_xmax =  [_dundef_, _dundef_, 5000.0D, 5000.0D, 5.0D, 0.1D, 0.2D, $
 	1D-3, 1D-5, _dundef_, 1D-3, 1D-3, 1000.0D, 1D-3]
 def_format = ['(E0.2)', '(E0.2)', '(I0)', '(I0)', '(F0.1)', '(F0.3)', $
 	'(F0.3)', '(E0.2)', '(E0.2)', '(F0.2)', '(E0.2)', '(E0.2)', $

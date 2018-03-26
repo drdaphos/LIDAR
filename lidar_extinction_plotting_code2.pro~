@@ -1,0 +1,62 @@
+
+flt_no = 'B923'
+
+restore,'/project/obr/Lidar_data/Faam_data/ICE-D/lidar/2015-08-12_B923_it060s_res045m_ext_dext.sav'
+
+lid_time = LID_TIME         ;FLOAT Array[223]
+lid_height = LID_HEIGHT     ;FLOAT Array[157]
+lid_altitude = LID_ALTITUDE ;FLOAT Array[223]
+lid_extinc = LID_EXTINC     ;FLOAT Array[223, 157]
+lid_ext = lid_extinc*1000000
+restore, '/project/obr/Lidar_data/Faam_data/ICE-D/lidar/2015-08-12_B923_cloudtop.sav'
+
+cloud_time = CLOUD_TIME        ;FLOAT Array[6658]
+cloud_top_h = CLOUD_TOP_HEIGHT ;DOUBLE Array [6658, 3]
+
+min_ext = MIN(lid_extinc)
+max_ext = MAX(lid_extinc)
+print, min_ext
+print, max_ext
+
+title = 'B923 Aerosol extinction Mm-1'
+variable = lid_ext[*,*,0]
+format = '(I)'
+datarange = [0, 1000]
+yrange = [0, 10000]
+;trange = [7, 13]
+
+col27
+
+tmin = floor(min(lid_time))
+tmax = ceil(max(lid_time))
+trange = [tmin, tmax]
+extrange = [0,1000] ;[0, 400]
+
+circle_sym = dindgen(19) * 2.0D * !dpi / 18.0D
+usersym, cos(circle_sym), sin(circle_sym), /fill
+
+ps_plot, fln = flt_no
+set_palette, 4, bottom=bottom, top=top, maxlevs=maxlevs
+nlevs = min([maxlevs, 32])
+
+cols = bottom + bytscl(indgen(nlevs), top=top-bottom)
+levs = extrange[0] + (extrange[1]-extrange[0]) * dindgen(nlevs) / nlevs
+
+contour, variable, lid_time/3600.0, lid_height, levels=levs, c_colors=cols, $
+	/cell_fill, /xstyle, /ystyle, xrange=trange, $
+	yrange=yrange, title=title, $
+	xtitle='Time (h)', ytitle='Altitude (m)', $
+	position=[0.1, 0.1, 0.8, 0.95]
+
+oplot, lid_time/3600.0, lid_altitude
+
+oplot, cloud_time/3600.0, cloud_top_h[*,0], psym=3, color=254, symsize=100
+oplot, cloud_time/3600.0, cloud_top_h[*,1], psym=3, color=4, symsize=4
+oplot, cloud_time/3600.0, cloud_top_h[*,2], psym=3, color=4, symsize=4
+
+colorbar, range=datarange, /vertical, bottom=bottom, ncolors=top-bottom+1, $
+	position=[0.9, 0.2, 0.95, 0.85], format=format
+
+end
+
+

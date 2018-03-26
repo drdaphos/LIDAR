@@ -24,26 +24,27 @@ default_use_assoc = 1
 
 ; file paths
 
-defsysv, '!machine', exist=mach_ex
-if (mach_ex && !machine EQ 'metoff_desktop') then   $
-	base_path = '/data/local/fros/Faam_data/'   $
-else if (mach_ex && !machine EQ 'linux_usual') then $
-	base_path = '/home/marenco2/Faam_data/'     $
-else                                                $
-	base_path = '~/Faam_data/'
+;defsysv, '!machine', exist=mach_ex
+;if (mach_ex && !machine EQ 'metoff_desktop') then   $
+;	base_path = '/data/local/fros/Faam_data/'   $
+;else if (mach_ex && !machine EQ 'linux_usual') then $
+;	base_path = '/home/marenco2/Faam_data/'     $
+;else                                                $
+;	base_path = '~/Faam_data/'
 
-base_path = '/data/local/fros/Faam_data/'
+;base_path = '/data/local/fros/Faam_data/'
+base_path = '/project/obr/LIDAR/'
 aries_path   = base_path + 'aries/'
 aries_search = aries_path
 
-if (mach_ex && !machine EQ 'metoff_desktop') then $
-	aries_search = [aries_path, '/project/aries/netCDF/']
+;if (mach_ex && !machine EQ 'metoff_desktop') then $
+;	aries_search = [aries_path, '/project/aries/netCDF/']
 
-info_path  = '/net/home/h02/frmo/Faam/lid_info/' 
-f77_path   = '/net/home/h02/frmo/Faam/f77/'
+info_path  = '/net/home/h06/fros/lidar/lid_info/' 
+f77_path   = '/net/home/h06/fros/lidar/f77/'
 raw_path   = base_path + 'lidar_bin/'
 core_path  = base_path + 'core/'
-horc_path0 = base_path + 'Horace_'
+horc_path0 = base_path + 'Horace/'
 orog_path  = base_path + 'orog/'
 out_path   = base_path + 'lidar_processed/
 cloud_path = base_path + 'cloud/'
@@ -251,7 +252,7 @@ rayl_near_bad   = 1500.0D
 size_float  = 4
 size_double = 8
 
-bottomline = 'Lidar data analysis by Franco Marenco, Met Office, OBR'
+bottomline = 'Lidar data analysis, Met Office, OBR'
 default_palette = 4
 default_landscape = 1
 

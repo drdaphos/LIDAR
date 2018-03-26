@@ -1,0 +1,50 @@
+LIDAR README
+
+Please talk to Debbie O'Sullivan (debbie.osullivan@metoffice.gov.uk, (+44) 01392 884215 ) 
+before publishing any of this data as there are some issues users need to be aware of
+
+FOR ALL FLIGHTS WITH USABLE DATA THERE WILL BE:
+RAW DATA FILE:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_raw-data.zip 
+There is IDL software available to read and process this and a user guide available on request 
+
+RANGE CORRECTED SIGNAL PLOT:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_range-corrected-signal-*s.png 
+These plots will either be labelled -30s.png or -2s.png depending on whether the data have been
+integrated to 30 seconds or shown at the highest resolution of 2 seconds. 
+These plots are effectively raw data - they can be used to give you an overview of the flight but care must be taken when interpreting the depolarised (channel 1) data. This is because there is an uncharacterised temperature dependence and instrument cross-talk problem which means that gradients can appear in the data, that are purely an artefact of the instrument itself.
+
+CLOUD TOP HEIGHT:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_cloud-top-height.nc
+These files contain the following data:
+cloud_time – time at which the cloud top height is recorded (s)
+cloud_1_h – height of the first cloud top (m)
+cloud_2_h – height of the second cloud top (m)
+cloud_3_h – height of the third cloud top (m)
+latitude  - latitude (deg N)
+longitude – longitude (deg E)
+offnadir – roll of the aircraft (deg) LIDAR data is not useable if this value is greater than 8
+
+FOR FLIGHTS WHERE FULL AEROSOL PROCESSING HAS BEEN DONE, THERE WILL ALSO BE:
+
+AEROSOL EXTINCTION COEFFICIENT PLOT:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_aerosol-extinction-coefficient.png
+These plots can be published (after consulting with us) other custom plots are avaialbale on request, for example combining cloud and aerosol data, portions of flights and differnet projections as well as the AOD along the flight track.
+
+AEROSOL EXTINCTION COEFFICIENT IN A NETCDF FILE:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_it060s-res045m-ext-dext.nc
+The aerosol data is all integrated to 60 seconds and these files contain the following data:
+LIDAR_NC_HEIGHT – LIDAR measurement altitude (m)
+LIDAR_NC_TIME – time  (s)
+LIDAR_NC_ALTITUDE  - aircraft altitude (m)
+LIDAR_NC_DISTANCE – along track distance (m)
+LIDAR_NC_LATITUDE – latitude (deg N)
+LIDAR_NC_LONGITUDE – longitude (deg E)
+LIDAR_NC_EXTINC – aerosol extinction coefficient (m-1)
+LIDAR_NC_UNC_EXT – extinction uncertainty (m-1)
+LIDAR_NC_OFFNADIR - roll of the aircraft (deg) LIDAR data is not useable if this value is greater than 8
+
+FOR ICE-D:
+metoffice-lidar_faam_YYYYMMDD_r*_b***_marine-bl-top.txt
+In ICE-D two distinct types of aerosol were measured with very different LIDAR ratios, dust and marine aerosol. The marine boundary layer top defined in this file is not the true marine boudary layer heiaght – it is the division between the two different types of aerosol.LIDAR README
+

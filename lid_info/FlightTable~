@@ -1,0 +1,308 @@
+B436   21 04 2009   094636   142528    lidar:146         platform:Faam   orog:orog_middleeast
+B437   23 04 2009   032200   075620    lidar:146         platform:Faam   orog:orog_middleeast
+B438   26 04 2009   093057   140634    lidar:146         platform:Faam   orog:orog_middleeast
+B439   27 04 2009   050239   094829    lidar:146         platform:Faam   orog:orog_middleeast
+B440   27 04 2009   234956   285338    lidar:146         platform:Faam   orog:orog_middleeast
+B441   28 04 2009   235500   284934    lidar:146         platform:Faam   orog:orog_middleeast
+B442   30 04 2009   050046   091540    lidar:146         platform:Faam   orog:orog_middleeast
+B444   01 05 2009   131141   182223    lidar:146         platform:Faam   orog:orog_middleeast
+B445   05 05 2009   072529   122854    lidar:146         platform:Faam   orog:orog_middleeast
+B446   07 05 2009   045428   095548    lidar:146         platform:Faam   orog:orog_middleeast
+B447   08 05 2009   043459   091756    lidar:146         platform:Faam   orog:orog_middleeast
+B448   09 05 2009   084238   133235    lidar:146         platform:Faam   orog:orog_middleeast
+E001   10 12 2009   110000   173000    lidar:146         platform:gnd
+E002   16 12 2009   095000   152500    lidar:146         platform:gnd
+E003   17 12 2009   083000   165500    lidar:146         platform:gnd
+E004   18 12 2009   092500   162500    lidar:146         platform:gnd
+B496   12 01 2010   125603   151926    lidar:146         platform:Faam   orog:orog_westeur
+B497   17 01 2010   110059   162350    lidar:146         platform:Faam   orog:orog_westeur
+B498   18 01 2010   115036   172316    lidar:146         platform:Faam   orog:orog_westeur
+B499   20 01 2010   111229   164134    lidar:146         platform:Faam   orog:orog_westeur
+B500   21 01 2010   103721   161048    lidar:146         platform:Faam   orog:orog_westeur
+B501   22 01 2010   074014   132043    lidar:146         platform:Faam   orog:orog_westeur
+B502   24 01 2010   113528   164228    lidar:146         platform:Faam   orog:orog_westeur
+B503   25 01 2010   104322   160929    lidar:146         platform:Faam   orog:orog_westeur
+B504   27 01 2010   111005   164717    lidar:146         platform:Faam   orog:orog_westeur
+B505   29 01 2010   075655   131833    lidar:146         platform:Faam   orog:orog_westeur
+B506   30 01 2010   094454   153624    lidar:146         platform:Faam   orog:orog_westeur
+B507   31 01 2010   095338   151609    lidar:146         platform:Faam   orog:orog_westeur
+B509   16 02 2010   102756   154924    lidar:146         platform:Faam   orog:orog_westeur
+B512   02 03 2010   093000   130000    lidar:146         platform:Faam   orog:orog_westeur
+B513   03 03 2010   082904   141129    lidar:146         platform:Faam   orog:orog_westeur
+B514   04 03 2010   085900   123609    lidar:146         platform:Faam   orog:orog_westeur
+B515   04 03 2010   140715   164237    lidar:146         platform:Faam   orog:orog_westeur
+B516   05 03 2010   104600   153000    lidar:146         platform:Faam   orog:orog_westeur
+E005   15 04 2010   093000   235959    lidar:146         platform:gnd
+E006   16 04 2010   000000   235959    lidar:146         platform:gnd
+E007   17 04 2010   000000   235959    lidar:146         platform:gnd
+E008   18 04 2010   000000   213000    lidar:146         platform:gnd
+X002   16 04 2010   000000   235959    lidar:Manchester  platform:gnd    pos:52.1:-0.416667:29
+B521   20 04 2010   112400   170200    lidar:146         platform:Faam   orog:orog_westeur
+B522   21 04 2010   101900   113500    lidar:146         platform:Faam   orog:orog_westeur
+B523   21 04 2010   134000   185600    lidar:146         platform:Faam   orog:orog_westeur
+B524   22 04 2010   100900   152800    lidar:146         platform:Faam   orog:orog_westeur
+B525   22 04 2010   163500   172000    lidar:146         platform:Faam   orog:orog_westeur
+B526   04 05 2010   100353   155103    lidar:146         platform:Faam   orog:orog_westeur
+B527   05 05 2010   090948   150653    lidar:146         platform:Faam   orog:orog_westeur
+B528   14 05 2010   100637   191726    lidar:146         platform:Faam   orog:orog_westeur
+B529   16 05 2010   125530   181006    lidar:146         platform:Faam   orog:orog_westeur
+B530   17 05 2010   112610   165756    lidar:146         platform:Faam   orog:orog_westeur
+B531   18 05 2010   094428   145402    lidar:146         platform:Faam   orog:orog_westeur
+B545   31 08 2010   134400   173300    lidar:146         platform:Faam   orog:orog_westeur
+B546   01 09 2010   100300   140300    lidar:146         platform:Faam   orog:orog_westeur
+B549   03 09 2010   162000   203200    lidar:146         platform:Faam   orog:orog_westeur
+B551   07 09 2010   033549   072517    lidar:146         platform:Faam   orog:orog_westeur
+B552   09 09 2010   085900   121000    lidar:146         platform:Faam   orog:orog_westeur
+B553   14 09 2010   092300   134300    lidar:146         platform:Faam   orog:orog_westeur
+B554   14 09 2010   152500   192700    lidar:146         platform:Faam   orog:orog_westeur
+B557   22 09 2010   110300   153700    lidar:146         platform:Faam   orog:orog_westeur
+B558   28 09 2010   095851   151602    lidar:146         platform:Faam   orog:orog_westeur
+B559   30 09 2010   110149   162257    lidar:146         platform:Faam   orog:orog_westeur
+E013   06 11 2010   150800   224300    lidar:146         platform:gnd
+E014   09 11 2010   170400   402500    lidar:146         platform:gnd
+E015   22 11 2010   113800   585900    lidar:146         platform:gnd
+E016   25 11 2010   114500   391200    lidar:146         platform:gnd
+E017   18 01 2011   114500   880000    lidar:146         platform:gnd
+B573   23 02 2011   115708   173420    lidar:146         platform:Faam   orog:orog_westeur
+B574   24 02 2011   090148   143135    lidar:146         platform:Faam   orog:orog_westeur
+B575   26 02 2011   112621   165638    lidar:146         platform:Faam   orog:orog_westeur
+B576   01 03 2011   110127   162048    lidar:146         platform:Faam   orog:orog_westeur
+B577   02 03 2011   105806   163346    lidar:146         platform:Faam   orog:orog_westeur
+B578   03 03 2011   115249   172123    lidar:146         platform:Faam   orog:orog_westeur
+B579   05 03 2011   121825   173017    lidar:146         platform:Faam   orog:orog_westeur
+B580   07 03 2011   180044   231704    lidar:146         platform:Faam   orog:orog_westeur
+B581   08 03 2011   173400   230814    lidar:146         platform:Faam   orog:orog_westeur
+B582   11 03 2011   135903   192956    lidar:146         platform:Faam   orog:orog_westeur
+B583   14 03 2011   114331   172155    lidar:146         platform:Faam   orog:orog_westeur
+B584   15 03 2011   173046   224334    lidar:146         platform:Faam   orog:orog_westeur
+B585   16 03 2011   135243   191403    lidar:146         platform:Faam   orog:orog_westeur
+B586   18 03 2011   170808   222911    lidar:146         platform:Faam   orog:orog_westeur
+B587   19 03 2011   140929   192235    lidar:146         platform:Faam   orog:orog_westeur
+B588   29 03 2011   122512   165317    lidar:146         platform:Faam   orog:orog_westeur
+B589   04 04 2011   155126   185209    lidar:146         platform:Faam   
+B590   05 04 2011   085018   132733    lidar:146         platform:Faam   orog:orog_westafrica
+B591   05 04 2011   150606   183742    lidar:146         platform:Faam   orog:orog_westafrica
+B592   07 04 2011   065252   170619    lidar:146         platform:Faam   orog:orog_westafrica
+B593   08 04 2011   082836   134100    lidar:146         platform:Faam   orog:orog_westafrica
+B594   09 04 2011   091240   135846    lidar:146         platform:Faam   
+B600   17 06 2011   074806   124114    lidar:146         platform:Faam   orog:orog_westafrica
+B601   17 06 2011   144254   193636    lidar:146         platform:Faam   orog:orog_westafrica
+B602   18 06 2011   080950   124027    lidar:146         platform:Faam   orog:orog_westafrica
+B603   18 06 2011   141524   155448    lidar:146         platform:Faam   orog:orog_westafrica
+B604   20 06 2011   124708   175135    lidar:146         platform:Faam   
+B605   21 06 2011   081001   115815    lidar:146         platform:Faam   orog:orog_westafrica
+B606   21 06 2011   140433   192026    lidar:146         platform:Faam   orog:orog_westafrica
+B607   22 06 2011   080349   123633    lidar:146         platform:Faam   orog:orog_westafrica
+B608   22 06 2011   151029   201539    lidar:146         platform:Faam   orog:orog_westafrica
+B609   24 06 2011   112825   164458    lidar:146         platform:Faam   orog:orog_westafrica
+B610   25 06 2011   073108   121637    lidar:146         platform:Faam   orog:orog_westafrica
+B611   25 06 2011   141417   191628    lidar:146         platform:Faam   orog:orog_westafrica
+B612   26 06 2011   072825   122135    lidar:146         platform:Faam   orog:orog_westafrica
+B613   26 06 2011   135537   185859    lidar:146         platform:Faam   orog:orog_westafrica
+B614   27 06 2011   063428   113836    lidar:146         platform:Faam   orog:orog_westafrica
+B615   28 06 2011   081431   112920    lidar:146         platform:Faam   orog:orog_westafrica
+B636   31 08 2011   090852   140952    lidar:146         platform:Faam
+B637   01 09 2011   085909   134927    lidar:146         platform:Faam
+B638   02 09 2011   083655   124122    lidar:146         platform:Faam
+B639   03 09 2011   085816   135849    lidar:146         platform:Faam
+B640   04 09 2011   055848   095800    lidar:146         platform:Faam
+B641   04 09 2011   111313   154225    lidar:146         platform:Faam
+B642   06 09 2011   090851   140851    lidar:146         platform:Faam
+B643   07 09 2011   085418   141309    lidar:146         platform:Faam
+B644   08 09 2011   230337   262948    lidar:146         platform:Faam
+B648   20 09 2011   075555   165202    lidar:146         platform:Faam
+B650   23 09 2011   082922   172524    lidar:146         platform:Faam
+X003   25 10 2011   133000   153000    lidar:Mocca       platform:gnd    pos:52.0735:-0.6246:165
+B651   22 11 2011   123124   171713    lidar:Manchester  platform:Faam   orog:orog_westeur   swap
+B654   28 11 2011   111437   155920    lidar:Manchester  platform:Faam   orog:orog_westeur   swap
+B655a  29 11 2011   080710   130647    lidar:Manchester  platform:Faam   orog:orog_westeur   swap   really:B655
+B655b  29 11 2011   140746   161053    lidar:Manchester  platform:Faam   orog:orog_westeur          really:B655
+B656   01 12 2011   070255   153126    lidar:Manchester  platform:Faam   orog:orog_westeur
+M002   02 12 2011   105200   123000    lidar:Mocca       platform:Mocca  orog:orog_westeur   view:zenith
+B658   08 12 2011   104853   210958    lidar:Manchester  platform:Faam   orog:orog_westeur
+B660   10 12 2011   121602   164257    lidar:Manchester  platform:Faam   orog:orog_westeur
+B662   12 12 2011   122401   171209    lidar:Manchester  platform:Faam   orog:orog_westeur
+B664   16 01 2012   140336   171039    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B665   19 01 2012   130215   175740    lidar:Leosphere   platform:Faam   orog:orog_westeur
+M003   19 01 2012   140000   165500    lidar:Mocca       platform:Mocca  orog:orog_westeur   view:zenith
+B666   21 01 2012   093148   122104    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B667   22 01 2012   085157   140328    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B668   23 01 2012   084737   182743    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B669   24 01 2012   104848   155438    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B670   25 01 2012   112838   160659    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B671   29 01 2012   084402   112327    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B672   30 01 2012   030450   084655    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B673   01 02 2012   171119   222900    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B674   02 02 2012   143125   195128    lidar:Leosphere   platform:Faam   orog:orog_westeur
+M005   02 02 2012   143000   165400    lidar:Mocca       platform:Mocca  orog:orog_westeur   view:zenith
+B675   03 02 2012   155242   211331    lidar:Leosphere   platform:Faam   orog:orog_westeur
+B676   27 02 2012   144700   181000    lidar:146         platform:Faam   orog:orog_westeur
+B678   07 03 2012   101406   145856    lidar:146         platform:Faam   orog:orog_westeur
+B679   10 03 2012   065936   120347    lidar:146         platform:Faam   orog:orog_westeur
+B680   12 03 2012   090814   140200    lidar:146         platform:Faam   orog:orog_westeur
+B681   13 03 2012   105700   155300    lidar:146         platform:Faam   orog:orog_westeur
+B682   14 03 2012   074939   123223    lidar:146         platform:Faam   orog:orog_westeur
+B683   14 03 2012   150307   201916    lidar:146         platform:Faam   orog:orog_westeur
+B683b  14 03 2012   163600   170700    lidar:146         platform:Faam   orog:orog_westeur   core:b683   swap
+B684   16 03 2012   094125   145445    lidar:146         platform:Faam   orog:orog_westeur
+B685   18 03 2012   085024   135639    lidar:146         platform:Faam   orog:orog_westeur
+B686   20 03 2012   064757   115948    lidar:146         platform:Faam   orog:orog_westeur
+E018   03 04 2012   104000   123000    lidar:146         platform:gnd    offzenith:60.0
+E019   10 04 2012   081500   203000    lidar:146         platform:gnd    offzenith:60.0
+E020   12 04 2012   131500   134500    lidar:146         platform:gnd    offzenith:60.0
+E021   24 04 2012   013000   081500    lidar:146         platform:gnd    offzenith:60.0
+X004   16 04 2012   000000   240000    lidar:Manchester  platform:gnd
+B699   06 06 2012   120000   165400    lidar:146         platform:Faam   orog:orog_westafrica
+B700   08 06 2012   075800   125700    lidar:146         platform:Faam   orog:orog_westafrica
+B701   09 06 2012   075805   131919    lidar:146         platform:Faam   orog:orog_westafrica
+B702   10 06 2012   080400   124200    lidar:146         platform:Faam   orog:orog_westafrica
+B703   10 06 2012   141300   172000    lidar:146         platform:Faam   orog:orog_westafrica
+B704   11 06 2012   121500   171900    lidar:146         platform:Faam   orog:orog_westafrica
+B705   12 06 2012   112800   170800    lidar:146         platform:Faam   orog:orog_westafrica
+B706   14 06 2012   130800   181400    lidar:146         platform:Faam   orog:orog_westafrica
+B707   15 06 2012   091400   143500    lidar:146         platform:Faam   orog:orog_westafrica
+B708   16 06 2012   075620   130845    lidar:146         platform:Faam   orog:orog_westafrica
+B709   17 06 2012   121400   172400    lidar:146         platform:Faam   orog:orog_westafrica
+B710   18 06 2012   075100   131500    lidar:146         platform:Faam   orog:orog_westafrica
+X005   22 08 2012   100000   140000    lidar:146         platform:gnd    pos:48.708:2.148:168
+B729   28 08 2012   130500   164500    lidar:146         platform:Faam   orog:orog_westeur
+B731   14 09 2012   140000   175400    lidar:146         platform:Faam   orog:orog_northbrazil
+B732   15 09 2012   122900   171500    lidar:146         platform:Faam   orog:orog_northbrazil
+B733   16 09 2012   135100   144500    lidar:146         platform:Faam   orog:orog_northbrazil
+B734   18 09 2012   120500   160200    lidar:146         platform:Faam   orog:orog_northbrazil
+B735   19 09 2012   120700   154700    lidar:146         platform:Faam   orog:orog_northbrazil
+B736   19 09 2012   183900   200600    lidar:146         platform:Faam   orog:orog_northbrazil
+B737   20 09 2012   144500   183300    lidar:146         platform:Faam   orog:orog_northbrazil
+B738   22 09 2012   155300   175200    lidar:146         platform:Faam   orog:orog_northbrazil
+B739   23 09 2012   115700   155200    lidar:146         platform:Faam   orog:orog_northbrazil
+B740   25 09 2012   115500   150500    lidar:146         platform:Faam   orog:orog_northbrazil
+B741   26 09 2012   125200   160800    lidar:146         platform:Faam   orog:orog_northbrazil
+B742   27 09 2012   125200   161700    lidar:146         platform:Faam   orog:orog_northbrazil
+B743   27 09 2012   180800   213400    lidar:146         platform:Faam   orog:orog_northbrazil
+B744   28 09 2012   125600   164200    lidar:146         platform:Faam   orog:orog_northbrazil
+B745   28 09 2012   180500   213300    lidar:146         platform:Faam   orog:orog_northbrazil
+B746   29 09 2012   125300   163800    lidar:146         platform:Faam   orog:orog_northbrazil
+B747    1 10 2012   150700   170000    lidar:146         platform:Faam   orog:orog_northbrazil
+B748    2 10 2012   122100   153400    lidar:146         platform:Faam   orog:orog_northbrazil
+B749    3 10 2012   134200   172800    lidar:146         platform:Faam   orog:orog_northbrazil
+B750    3 10 2012   191500   222500    lidar:146         platform:Faam   orog:orog_northbrazil
+M049   28 02 2013   124616   153920    lidar:Mocca       platform:Mocca                           view:nadir
+B755   28 02 2013   122705   172652    lidar:146         platform:Faam   orog:orog_westeur
+B756   01 03 2013   111607   161704    lidar:146         platform:Faam   orog:orog_westeur
+E022    5 03 2013   154000   162000    lidar:Mocca       platform:gnd
+B759   20 03 2013   082325   172952    lidar:146         platform:Faam   orog:orog_westeur
+B760   21 03 2013   081226   165723    lidar:146         platform:Faam   orog:orog_westeur
+B761   22 03 2013   080258   155609    lidar:146         platform:Faam   orog:orog_westeur
+B762   23 03 2013   080053   161933    lidar:146         platform:Faam   orog:orog_westeur
+B763   26 03 2013   095826   150645    lidar:146         platform:Faam   orog:orog_westeur
+B764   29 03 2013   080447   170139    lidar:146         platform:Faam   orog:orog_westeur
+B765   30 03 2013   085619   140618    lidar:146         platform:Faam   orog:orog_westeur
+B766   31 03 2013   072312   114758    lidar:146         platform:Faam   orog:orog_westeur
+B767   02 04 2013   070940   132744    lidar:146         platform:Faam   orog:orog_westeur
+B768   03 04 2013   074746   152031    lidar:146         platform:Faam   orog:orog_westeur
+B772   01 05 2013   101051   131952    lidar:146         platform:Faam
+B773   11 05 2013   170455   202540    lidar:146         platform:Faam
+B774   12 05 2013   165140   215356    lidar:146         platform:Faam
+B775   15 05 2013   141351   191120    lidar:146         platform:Faam 
+B776   16 05 2013   161933   211149    lidar:146         platform:Faam 
+B777   19 05 2013   174026   223309    lidar:146         platform:Faam 
+B778   21 05 2013   161658   182549    lidar:146         platform:Faam 
+B779   23 05 2013   145503   194031    lidar:146         platform:Faam 
+B780   24 05 2013   144622   193731    lidar:146         platform:Faam 
+B781   25 05 2013   160606   210855    lidar:146         platform:Faam 
+B782   26 05 2013   163510   214029    lidar:146         platform:Faam 
+B812   16 11 2013   103005   125745    lidar:146         platform:Faam   orog:orog_westeur   swap
+B813   19 11 2013   075229   124204    lidar:146         platform:Faam   orog:orog_westeur   swap
+B814   20 11 2013   100108   144301    lidar:146         platform:Faam   orog:orog_westeur   swap
+B815   22 11 2013   100039   134257    lidar:146         platform:Faam   orog:orog_westeur   swap
+B816   24 11 2013   072455   122438    lidar:146         platform:Faam   orog:orog_westeur   swap
+B817a  25 11 2013   195149   211000    lidar:146         platform:Faam   orog:orog_westeur   swap   really:B817
+B817b  25 11 2013   211000   221034    lidar:146         platform:Faam   orog:orog_westeur          really:B817
+B818   29 11 2013   091353   132714    lidar:146         platform:Faam   orog:orog_westeur
+B819   30 11 2013   080600   124800    lidar:146         platform:Faam   orog:orog_westeur
+E028   15 05 2014   093000   391500    lidar:146         platform:gnd
+B851   17 06 2014   095643   123203    lidar:146         platform:Faam   orog:orog_westeur
+B871   10 09 2014   120645   153528    lidar:146         platform:Faam   orog:orog_westeur
+E030   09 06 2015   080000   123000    lidar:146         platform:gnd
+B901   23 03 2015   105359   135525    lidar:146         platform:Faam   
+B919   06 08 2015   130220   170855    lidar:146         platform:Faam
+B920   07 08 2015   140333   184520    lidar:146         platform:Faam
+B921   10 08 2015   135505   184323    lidar:146         platform:Faam
+B922   11 08 2015   134414   182732    lidar:146         platform:Faam
+B923   12 08 2015   090218   120930    lidar:146         platform:Faam
+B924   12 08 2015   135835   185952    lidar:146         platform:Faam
+B925   13 08 2015   133749   180827    lidar:146         platform:Faam
+B926   14 08 2015   142330   190230    lidar:146         platform:Faam
+B927   15 08 2015   135556   165140    lidar:146         platform:Faam
+B928   16 08 2015   135942   190822    lidar:146         platform:Faam
+B929   17 08 2015   140314   185704    lidar:146         platform:Faam
+B930   18 08 2015   135451   185109    lidar:146         platform:Faam
+B931   19 08 2015   115939   165909    lidar:146         platform:Faam
+B932   20 08 2015   085818   135150    lidar:146         platform:Faam
+B933   21 08 2015   135757   163651    lidar:146         platform:Faam
+B934   25 08 2015   135816   184913    lidar:146         platform:Faam
+B954   03 05 2016   113000   163600    lidar:146         platform:Faam
+M150   31 03 2016   110600   125410    lidar:Mocca	 platform:Mocca			     view:zenith
+M157   06 07 2016   112650   133915    lidar:Mocca       platform:Mocca                      view:zenith
+M159   14 07 2016   113418   134500    lidar:Mocca       platform:Mocca                      view:zenith
+B956   11 06 2016   030000   073000    lidar:146         platform:Faam
+B957   12 06 2016   030000   100000    lidar:146         platform:Faam
+B958   13 06 2016   060606   095030    lidar:146         platform:Faam
+B959   21 06 2016   050000   095901    lidar:146         platform:Faam
+B960   22 06 2016   053045   090738    lidar:146         platform:Faam
+B961   23 06 2016   052911   100000    lidar:146         platform:Faam
+B962   23 06 2016   112228   145814    lidar:146         platform:Faam
+B963   25 06 2016   153556   200000    lidar:146         platform:Faam
+B964   26 06 2016   050549   085700    lidar:146         platform:Faam
+B965   26 06 2016   115000   153300    lidar:146         platform:Faam
+B966   27 06 2016   052100   100800    lidar:146         platform:Faam
+B967   28 06 2016   054000   093200    lidar:146         platform:Faam
+B968   30 06 2016   033000   073200    lidar:146         platform:Faam
+B969   02 07 2016   030000   080000    lidar:146         platform:Faam
+B970   03 07 2016   030000   085000    lidar:146         platform:Faam
+B971   04 07 2016   030000   103000    lidar:146         platform:Faam
+B972   05 07 2016   030000   074000    lidar:146         platform:Faam
+B973   06 07 2016   013000   064400    lidar:146         platform:Faam
+B974   07 07 2016   040000   080000    lidar:146         platform:Faam
+B975   09 07 2016   040000   091000    lidar:146         platform:Faam
+B976   10 07 2016   040000   090000    lidar:146         platform:Faam
+B977   11 07 2016   043000   063000    lidar:146         platform:Faam
+C028   16 08 2017   090728   125355    lidar:146         platform:Faam
+C029   17 08 2017   085636   121908    lidar:146         platform:Faam
+C030   17 08 2017   141317   174608    lidar:146         platform:Faam
+C031   18 08 2017   115050   154301    lidar:146         platform:Faam
+C032   19 08 2017   100131   134410    lidar:146         platform:Faam
+C033   22 08 2017   085622   122549    lidar:146         platform:Faam
+C034   23 08 2017   090229   123146    lidar:146         platform:Faam
+C035   23 08 2017   140600   174212    lidar:146         platform:Faam
+C036   24 08 2017   090318   120512    lidar:146         platform:Faam
+C037   24 08 2017   134653   165344    lidar:146         platform:Faam
+C038   25 08 2017   085622   124907    lidar:146         platform:Faam
+C039   25 08 2017   141705   172234    lidar:146         platform:Faam
+C040   26 08 2017   085527   122415    lidar:146         platform:Faam
+C041   26 08 2017   141429   171759    lidar:146         platform:Faam
+C042   28 08 2017   085545   122524    lidar:146         platform:Faam
+C043   28 08 2017   134945   172301    lidar:146         platform:Faam
+C044   29 08 2017   085459   124531    lidar:146         platform:Faam
+C045   29 08 2017   141043   171930    lidar:146         platform:Faam
+C046   30 08 2017   083519   125248    lidar:146         platform:Faam
+C047   01 09 2017   085620   114603    lidar:146         platform:Faam
+C048   01 09 2017   132616   172318    lidar:146         platform:Faam
+C049   02 09 2017   085629   124322    lidar:146         platform:Faam
+C050   04 09 2017   131039   171737    lidar:146         platform:Faam
+C051   05 09 2017   085355   121301    lidar:146         platform:Faam
+C052   05 09 2017   140902   173813    lidar:146         platform:Faam
+C053   06 09 2017   084926   124648    lidar:146         platform:Faam
+C054   06 09 2017   142259   174914    lidar:146         platform:Faam
+C055   07 09 2017   115920   173310    lidar:146         platform:Faam
+C056   09 09 2017   080145   140000    lidar:146         platform:Faam
+C057   27 09 2017   115902   144209    lidar:146         platform:Faam
+C058   02 10 2017   080000   124215    lidar:146         platform:Faam
+C059   02 10 2017   153904   180559    lidar:146         platform:Faam
+C060   04 10 2017   090917   121211    lidar:146         platform:Faam
+C061   04 10 2017   142726   182838    lidar:146         platform:Faam
+C062   05 10 2017   093234   140500    lidar:146         platform:Faam
+C063   05 10 2017   155634   181317    lidar:146         platform:Faam
+C064   06 10 2017   111700   145949    lidar:146         platform:Faam
+E031   28 11 2017   000000   213000    lidar:146         platform:gnd
+E032   29 11 2017   000000   213000    lidar:146         platform:gnd

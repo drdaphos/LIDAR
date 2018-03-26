@@ -1,0 +1,24 @@
+pro run_lid_cloudtop
+
+lid_init, it=2, /guess, 'B958'
+
+; the following will bring up a plot
+lid_cloudtop, cloud_top_height=cloud_top_height
+
+; the following will save NaN for undefined cloud levels
+idx = where(cloud_top_height LT -1D10, cnt)
+if (cnt GT 0) then cloud_top_height[idx]=!values.f_nan
+
+; the following will save the data
+common __lid
+cloud_time = lid_time
+save, filename = outfln + '_cloudtop.sav', cloud_time, cloud_top_height
+
+cloud_1 = cloud_top_height[*,0]
+cloud_2 = cloud_top_height[*,1]
+cloud_3 = cloud_top_height[*,2]
+nrows = n_elements(lid_time)
+write_csv, 'metoffice-lidar_faam_20160612_r0_b958_cloud_top_height.txt', [nrows, cloud_time, cloud_1, cloud_2, cloud_3], TABLE_HEADER = ['n_rows', 'cloud_time', 'cloud_1', 'cloud_2', cloud_3']
+
+end
+

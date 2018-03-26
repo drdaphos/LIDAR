@@ -18,6 +18,14 @@ endif else if (instrument EQ '146' && yy EQ 2012 $
 endif else if (instrument EQ '146' && yy EQ 2013 && (mth EQ 2 $
    || (mth EQ 3 && dd LT 10))) then begin
 	fln = 'overlap_feb2013.dat'
+endif else if (instrument EQ '146' && yy EQ 2015 && mth EQ 8) then begin
+	fln = 'overlap_iced.dat'
+endif else if (instrument EQ '146' && yy EQ 2016 && (mth EQ 6 $
+   || (mth EQ 7 && dd LT 12))) then begin
+	fln = 'overlap_monsoon.dat'
+endif else if (instrument EQ '146' && yy EQ 2017 && (mth GE 8 $
+   || (mth LE 9 ))) then begin
+	fln = 'overlap_clarify.dat'
 endif else begin
 	info_str = 'No overlap correction applied.'
 	printf, lgf, info_str

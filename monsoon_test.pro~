@@ -1,0 +1,25 @@
+pro monsoon_test
+
+; source Rayleigh scattering portion of flight
+
+dir = '~/lidar/Rayleigh/monsoon/'
+
+flno0  = ['B971' , 'B972',  'B972' , 'B972'  ]
+flno1  = ['B971',  'B972a', 'B972b', 'B972c' ]
+start0 = [ 06.03 ,  03.88,   03.95,   04.51  ]
+stop0  = [ 06.07 ,  03.92,   03.99,   04.63  ]
+
+
+@lid_settings.include
+
+
+append = '_pr2_rdp'
+for i=0, n_elements(flno0)-1 do begin
+	lid_init, flno0[i], start=start0[i], stop=stop0[i], $
+		overlap=0.0, /no_overlap_correct
+	sav_fln = string(format='(%"%s_it%03ds_res%03dm%s.sav")', outfln, $
+		target_it, round(range_res * smooth), append)
+	file_move, sav_fln, dir + flno1[i] + '.sav'
+endfor
+
+end

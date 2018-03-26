@@ -1,0 +1,71 @@
+pro run_lid_cloudtop
+
+flt_no = '033'
+date = '20170822'
+
+lid_init, it=2, /guess, 'C'+flt_no
+
+; the following will bring up a plot
+lid_cloudtop, cloud_top_height=cloud_top_height
+
+; the following will save NaN for undefined cloud levels
+idx = where(cloud_top_height LT -1D10, cnt)
+if (cnt GT 0) then cloud_top_height[idx]=!values.f_nan
+
+; the following will save the data
+common __lid
+cloud_time = lid_time
+save, filename = outfln + '_cloudtop.sav', cloud_time, cloud_top_height
+
+cloud_1 = cloud_top_height[*,0]
+cloud_2 = cloud_top_height[*,1]
+cloud_3 = cloud_top_height[*,2]
+nrows = n_elements(lid_time)
+
+;set up netCDF file and handler
+n_profiles = nrows
+fid=ncdf_create('metoffice-lidar_faam_'+ date +'_r0_c' + flt_no + '_cloud-top-height.nc', /CLOBBER)
+; number of dimensions that will be created
+d=indgen(2,/LONG) 
+
+; set up dimesnions
+d[0]=ncdf_dimdef(fid, 'n_profiles', n_profiles)
+;d[1]=ncdf_dimdef(fid, 'n_bins', n_bins)
+
+; define variables to be stored
+var_id=ncdf_vardef(fid, 'cloud_time',d[0], /DOUBLE)
+var_id=ncdf_vardef(fid, 'cloud_1_h',d[0],/DOUBLE)
+var_id=ncdf_vardef(fid, 'cloud_2_h',d[0],/DOUBLE)
+var_id=ncdf_vardef(fid, 'cloud_3_h',d[0],/DOUBLE)
+var_id=ncdf_vardef(fid, 'latitude',d[0],/DOUBLE)
+var_id=ncdf_vardef(fid, 'longitude',d[0],/DOUBLE)
+var_id=ncdf_vardef(fid, 'offnadir',d[0],/DOUBLE)
+
+;change modes
+ncdf_control, fid, /ENDEF
+
+;write the data
+ncdf_varput, fid, 'cloud_time', cloud_time
+ncdf_varput, fid, 'cloud_1_h', cloud_1
+ncdf_varput, fid, 'cloud_2_h', cloud_2
+ncdf_varput, fid, 'cloud_3_h', cloud_3
+ncdf_varput, fid, 'latitude', lid_latitude
+ncdf_varput, fid, 'longitude', lid_longitude
+ncdf_varput, fid, 'offnadir', lid_offnadir
+
+ncdf_close, fid
+print, 'netCDF written, closing file'
+
+;save a plot of the cloud top height
+;col27
+;device,/portrait, decomposed=0, color=1, filename=flt_no + 'aerosol_extinction.eps'
+;ps_plot, fln = 'metoffice-lidar_faam_' + date + '_r0_c' +flt_no +'_cloud_top_height.eps'
+;plot, lid_time/3600.0, lid_altitude, title=title, $
+;	xtitle='Time (h)', ytitle='Altitude AMSL (km)',font=1, $
+;	position=[0.1, 0.55, 0.9, 0.94]
+;oplot, cloud_time/3600.0, cloud_top_height[*,0], color=23
+;oplot, cloud_time/3600.0, cloud_top_height[*,1], color=20
+;oplot, cloud_time/3600.0, cloud_top_height[*,2], color=18
+;ps_plot, /close
+end
+
